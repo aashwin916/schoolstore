@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration Form</title>
+</head>
+<body>
+    <h2>Registration Form</h2>
+    <form action="#" method="post">
+        {% csrf_token %}
+        <!-- Basic Information -->
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="dob">DOB:</label>
+        <input type="date" id="dob" name="dob" required><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+        </select><br>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required><br>
+
+        <label for="email">Mail ID:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="4" required></textarea><br>
+
+        <!-- Department and Courses -->
+        <label for="department">Department:</label>
+        <select id="department" name="department" onchange="updateCourses()" required>
+            <option value="computer_science">Computer Science</option>
+            <option value="commerce">Commerce</option>
+            <option value="engineering">Engineering</option>
+            <option value="mathematics">Mathematics</option>
+            <option value="biology">Biology</option>
+        </select><br>
+
+        <label for="course">Courses:</label>
+        <select id="course" name="course" required>
+            <!-- Courses will be populated dynamically based on the selected department -->
+        </select><br>
+
+        <!-- Purpose -->
+        <label for="purpose">Purpose:</label>
+        <select id="purpose" name="purpose" required>
+            <option value="enquiry">For Enquiry</option>
+            <option value="place_order">Place Order</option>
+            <option value="return">Return</option>
+        </select><br>
+
+        <label>Materials Provide:</label><br>
+        <input type="checkbox" id="debit_notebook" name="materials" value="debit_notebook">
+        <label for="debit_notebook">Debit Note Book</label><br>
+
+        <input type="checkbox" id="pen" name="materials" value="pen">
+        <label for="pen">Pen</label><br>
+
+        <input type="checkbox" id="exam_papers" name="materials" value="exam_papers">
+        <label for="exam_papers">Exam Papers</label><br>
+
+        <button type="button" onclick="process_reg()">Submit</button>
+        <button type="button" onclick="logout()">Logout</button>
+    </form>
+
+    <script>
+        function updateCourses() {
+            var department = document.getElementById('department').value;
+            var courseSelect = document.getElementById('course');
+            courseSelect.innerHTML = '';  // Clear existing options
+
+            if (department === 'computer_science') {
+                var computerScienceCourses = ['Computer Networks', 'Artificial Intelligence', 'Database Systems'];
+                addOptionsToDropdown(courseSelect, computerScienceCourses);
+            } else if (department === 'commerce') {
+                var commerceCourses = ['Business Administration', 'Accounting', 'Marketing'];
+                addOptionsToDropdown(courseSelect, commerceCourses);
+            } else if (department === 'engineering') {
+                var engineeringCourses = ['Mechanical Engineering', 'Electrical Engineering', 'Civil Engineering'];
+                addOptionsToDropdown(courseSelect, engineeringCourses);
+            } else if (department === 'mathematics') {
+                var mathematicsCourses = ['Calculus', 'Linear Algebra', 'Statistics'];
+                addOptionsToDropdown(courseSelect, mathematicsCourses);
+            } else if (department === 'biology') {
+                var biologyCourses = ['Cell Biology', 'Genetics', 'Ecology'];
+                addOptionsToDropdown(courseSelect, biologyCourses);
+            }
+        }
+
+        function addOptionsToDropdown(dropdown, options) {
+            options.forEach(function(option) {
+                var optionElement = document.createElement('option');
+                optionElement.value = option;
+                optionElement.text = option;
+                dropdown.add(optionElement);
+            });
+        }
+
+        function logout() {
+
+        window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
